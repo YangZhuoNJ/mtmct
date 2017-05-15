@@ -1,4 +1,4 @@
-.gitignore
+#.gitignore
 # IntelliJ
 *.iml
 *.ipr
