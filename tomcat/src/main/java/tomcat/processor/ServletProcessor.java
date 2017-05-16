@@ -6,8 +6,10 @@ import tomcat.base.HttpResponse;
 /**
  * Created by admin on 2017/5/16.
  */
-public class ServletProcessor implements Processor{
+public class ServletProcessor implements SourceProcessor {
 
     public void process(HttpRequest request, HttpResponse response) {
+
+
     }
 }

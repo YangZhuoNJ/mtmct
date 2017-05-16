@@ -1,6 +1,7 @@
 package tomcat.base;
 
 import org.apache.catalina.connector.http.SocketInputStream;
+import org.apache.catalina.util.ParameterMap;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -8,10 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by admin on 2017/5/15.
@@ -19,11 +17,33 @@ import java.util.Map;
 public class HttpRequest implements HttpServletRequest {
 
     private SocketInputStream sis = null;
+    private String queryString = null;
+    private boolean requestedSessionURL;
+    private String sessionId = null;
+
+
+    protected HashMap<String, Object> headers = new HashMap<String, Object>();          //http headers
+    protected ArrayList cookies = new ArrayList();                                      //web cookies
+    protected ParameterMap parameters = null;                                           //request parameters
+
 
     public HttpRequest(SocketInputStream sis) {
         this.sis = sis;
     }
 
+    public void setRequestedSessionURL(boolean b) {
+        this.requestedSessionURL = b;
+    }
+
+    public void setQueryString(String query) {
+        this.queryString = query;
+    }
+
+    public void setRequestedSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    //auto generate method
     public String getAuthType() {
         return null;
     }
