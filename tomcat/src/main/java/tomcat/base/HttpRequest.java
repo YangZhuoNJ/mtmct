@@ -1,5 +1,7 @@
 package tomcat.base;
 
+import org.apache.catalina.connector.http.SocketInputStream;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.BufferedReader;
@@ -15,6 +17,12 @@ import java.util.Map;
  * Created by admin on 2017/5/15.
  */
 public class HttpRequest implements HttpServletRequest {
+
+    private SocketInputStream sis = null;
+
+    public HttpRequest(SocketInputStream sis) {
+        this.sis = sis;
+    }
 
     public String getAuthType() {
         return null;

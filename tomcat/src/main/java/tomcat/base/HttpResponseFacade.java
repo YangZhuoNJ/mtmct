@@ -13,147 +13,153 @@ import java.util.Locale;
  */
 public class HttpResponseFacade implements HttpServletResponse {
 
-    public void addCookie(Cookie cookie) {
+    private HttpResponse response = null;
 
+    public HttpResponseFacade(HttpResponse response) {
+        this.response = response;
+    }
+
+    public void addCookie(Cookie cookie) {
+        response.addCookie(cookie);
     }
 
     public boolean containsHeader(String s) {
-        return false;
+        return response.containsHeader(s);
     }
 
     public String encodeURL(String s) {
-        return null;
+        return response.encodeURL(s);
     }
 
     public String encodeRedirectURL(String s) {
-        return null;
+        return response.encodeRedirectURL(s);
     }
 
     public String encodeUrl(String s) {
-        return null;
+        return response.encodeUrl(s);
     }
 
     public String encodeRedirectUrl(String s) {
-        return null;
+        return response.encodeRedirectUrl(s);
     }
 
     public void sendError(int i, String s) throws IOException {
-
+        response.sendError(i, s);
     }
 
     public void sendError(int i) throws IOException {
-
+        response.sendError(i);
     }
 
     public void sendRedirect(String s) throws IOException {
-
+        response.sendRedirect(s);
     }
 
     public void setDateHeader(String s, long l) {
-
+        response.setDateHeader(s, l);
     }
 
     public void addDateHeader(String s, long l) {
-
+        response.addDateHeader(s, l);
     }
 
     public void setHeader(String s, String s1) {
-
+        response.setHeader(s, s1);
     }
 
     public void addHeader(String s, String s1) {
-
+        response.addHeader(s, s1);
     }
 
     public void setIntHeader(String s, int i) {
-
+        response.setIntHeader(s, i);
     }
 
     public void addIntHeader(String s, int i) {
-
+        response.addIntHeader(s, i);
     }
 
     public void setStatus(int i) {
-
+        response.setStatus(i);
     }
 
     public void setStatus(int i, String s) {
-
+        response.setStatus(i, s);
     }
 
     public int getStatus() {
-        return 0;
+        return response.getStatus();
     }
 
     public String getHeader(String s) {
-        return null;
+        return response.getHeader(s);
     }
 
     public Collection<String> getHeaders(String s) {
-        return null;
+        return response.getHeaders(s);
     }
 
     public Collection<String> getHeaderNames() {
-        return null;
+        return response.getHeaderNames();
     }
 
     public String getCharacterEncoding() {
-        return null;
+        return response.getCharacterEncoding();
     }
 
     public String getContentType() {
-        return null;
+        return response.getContentType();
     }
 
     public ServletOutputStream getOutputStream() throws IOException {
-        return null;
+        return response.getOutputStream();
     }
 
     public PrintWriter getWriter() throws IOException {
-        return null;
+        return response.getWriter();
     }
 
     public void setCharacterEncoding(String s) {
-
+        response.setCharacterEncoding(s);
     }
 
     public void setContentLength(int i) {
-
+        response.setContentLength(i);
     }
 
     public void setContentType(String s) {
-
+        response.setContentType(s);
     }
 
     public void setBufferSize(int i) {
-
+        response.setBufferSize(i);
     }
 
     public int getBufferSize() {
-        return 0;
+        return response.getBufferSize();
     }
 
     public void flushBuffer() throws IOException {
-
+        response.flushBuffer();
     }
 
     public void resetBuffer() {
-
+        response.resetBuffer();
     }
 
     public boolean isCommitted() {
-        return false;
+        return response.isCommitted();
     }
 
     public void reset() {
-
+        response.reset();
     }
 
     public void setLocale(Locale locale) {
-
+        response.setLocale(locale);
     }
 
     public Locale getLocale() {
-        return null;
+        return response.getLocale();
     }
 }

@@ -16,267 +16,273 @@ import java.util.Map;
  */
 public class HttpRequestFacade implements HttpServletRequest {
 
+    private HttpRequest request = null;
+
+    public HttpRequestFacade(HttpRequest request) {
+        this.request = request;
+    }
+
     public String getAuthType() {
-        return null;
+        return request.getAuthType();
     }
 
     public Cookie[] getCookies() {
-        return new Cookie[0];
+        return request.getCookies();
     }
 
     public long getDateHeader(String s) {
-        return 0;
+        return request.getDateHeader(s);
     }
 
     public String getHeader(String s) {
-        return null;
+        return request.getHeader(s);
     }
 
     public Enumeration<String> getHeaders(String s) {
-        return null;
+        return request.getHeaders(s);
     }
 
     public Enumeration<String> getHeaderNames() {
-        return null;
+        return request.getHeaderNames();
     }
 
     public int getIntHeader(String s) {
-        return 0;
+        return request.getIntHeader(s);
     }
 
     public String getMethod() {
-        return null;
+        return request.getMethod();
     }
 
     public String getPathInfo() {
-        return null;
+        return request.getPathInfo();
     }
 
     public String getPathTranslated() {
-        return null;
+        return request.getPathTranslated();
     }
 
     public String getContextPath() {
-        return null;
+        return request.getContextPath();
     }
 
     public String getQueryString() {
-        return null;
+        return request.getQueryString();
     }
 
     public String getRemoteUser() {
-        return null;
+        return request.getRemoteUser();
     }
 
     public boolean isUserInRole(String s) {
-        return false;
+        return request.isUserInRole(s);
     }
 
     public Principal getUserPrincipal() {
-        return null;
+        return request.getUserPrincipal();
     }
 
     public String getRequestedSessionId() {
-        return null;
+        return request.getRequestedSessionId();
     }
 
     public String getRequestURI() {
-        return null;
+        return request.getRequestURI();
     }
 
     public StringBuffer getRequestURL() {
-        return null;
+        return request.getRequestURL();
     }
 
     public String getServletPath() {
-        return null;
+        return request.getServletPath();
     }
 
     public HttpSession getSession(boolean b) {
-        return null;
+        return request.getSession(b);
     }
 
     public HttpSession getSession() {
-        return null;
+        return request.getSession();
     }
 
     public boolean isRequestedSessionIdValid() {
-        return false;
+        return request.isRequestedSessionIdValid();
     }
 
     public boolean isRequestedSessionIdFromCookie() {
-        return false;
+        return request.isRequestedSessionIdFromCookie();
     }
 
     public boolean isRequestedSessionIdFromURL() {
-        return false;
+        return request.isRequestedSessionIdFromURL();
     }
 
     public boolean isRequestedSessionIdFromUrl() {
-        return false;
+        return request.isRequestedSessionIdFromUrl();
     }
 
     public boolean authenticate(HttpServletResponse httpServletResponse) throws IOException, ServletException {
-        return false;
+        return request.authenticate(httpServletResponse);
     }
 
     public void login(String s, String s1) throws ServletException {
-
+        request.login(s, s1);
     }
 
     public void logout() throws ServletException {
-
+        request.logout();
     }
 
     public Collection<Part> getParts() throws IOException, ServletException {
-        return null;
+        return request.getParts();
     }
 
     public Part getPart(String s) throws IOException, ServletException {
-        return null;
+        return request.getPart(s);
     }
 
     public Object getAttribute(String s) {
-        return null;
+        return request.getAttribute(s);
     }
 
     public Enumeration<String> getAttributeNames() {
-        return null;
+        return request.getAttributeNames();
     }
 
     public String getCharacterEncoding() {
-        return null;
+        return request.getCharacterEncoding();
     }
 
     public void setCharacterEncoding(String s) throws UnsupportedEncodingException {
-
+        request.setCharacterEncoding(s);
     }
 
     public int getContentLength() {
-        return 0;
+        return request.getContentLength();
     }
 
     public String getContentType() {
-        return null;
+        return request.getContentType();
     }
 
     public ServletInputStream getInputStream() throws IOException {
-        return null;
+        return request.getInputStream();
     }
 
     public String getParameter(String s) {
-        return null;
+        return request.getParameter(s);
     }
 
     public Enumeration<String> getParameterNames() {
-        return null;
+        return request.getParameterNames();
     }
 
     public String[] getParameterValues(String s) {
-        return new String[0];
+        return request.getParameterValues(s);
     }
 
     public Map<String, String[]> getParameterMap() {
-        return null;
+        return request.getParameterMap();
     }
 
     public String getProtocol() {
-        return null;
+        return request.getProtocol();
     }
 
     public String getScheme() {
-        return null;
+        return request.getScheme();
     }
 
     public String getServerName() {
-        return null;
+        return request.getServerName();
     }
 
     public int getServerPort() {
-        return 0;
+        return request.getServerPort();
     }
 
     public BufferedReader getReader() throws IOException {
-        return null;
+        return request.getReader();
     }
 
     public String getRemoteAddr() {
-        return null;
+        return request.getRemoteAddr();
     }
 
     public String getRemoteHost() {
-        return null;
+        return request.getRemoteHost();
     }
 
     public void setAttribute(String s, Object o) {
-
+        request.setAttribute(s, o);
     }
 
     public void removeAttribute(String s) {
-
+        request.removeAttribute(s);
     }
 
     public Locale getLocale() {
-        return null;
+        return request.getLocale();
     }
 
     public Enumeration<Locale> getLocales() {
-        return null;
+        return request.getLocales();
     }
 
     public boolean isSecure() {
-        return false;
+        return request.isSecure();
     }
 
     public RequestDispatcher getRequestDispatcher(String s) {
-        return null;
+        return request.getRequestDispatcher(s);
     }
 
     public String getRealPath(String s) {
-        return null;
+        return request.getRealPath(s);
     }
 
     public int getRemotePort() {
-        return 0;
+        return request.getRemotePort();
     }
 
     public String getLocalName() {
-        return null;
+        return request.getLocalName();
     }
 
     public String getLocalAddr() {
-        return null;
+        return request.getLocalAddr();
     }
 
     public int getLocalPort() {
-        return 0;
+        return request.getLocalPort();
     }
 
     public ServletContext getServletContext() {
-        return null;
+        return request.getServletContext();
     }
 
     public AsyncContext startAsync() throws IllegalStateException {
-        return null;
+        return request.startAsync();
     }
 
     public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse) throws IllegalStateException {
-        return null;
+        return request.startAsync(servletRequest, servletResponse);
     }
 
     public boolean isAsyncStarted() {
-        return false;
+        return request.isAsyncStarted();
     }
 
     public boolean isAsyncSupported() {
-        return false;
+        return request.isAsyncSupported();
     }
 
     public AsyncContext getAsyncContext() {
-        return null;
+        return request.getAsyncContext();
     }
 
     public DispatcherType getDispatcherType() {
-        return null;
+        return request.getDispatcherType();
     }
 }

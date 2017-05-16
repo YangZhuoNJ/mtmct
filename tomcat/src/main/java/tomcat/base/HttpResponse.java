@@ -4,6 +4,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Locale;
@@ -12,6 +13,17 @@ import java.util.Locale;
  * Created by admin on 2017/5/15.
  */
 public class HttpResponse implements HttpServletResponse {
+
+    private OutputStream os = null;
+    private HttpRequest request = null;
+
+    public HttpResponse(OutputStream os) {
+        this.os = os;
+    }
+
+    public void setRequest(HttpRequest request) {
+        this.request = request;
+    }
 
     public void addCookie(Cookie cookie) {
 
