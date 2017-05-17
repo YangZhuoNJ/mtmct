@@ -1,5 +1,6 @@
 package tomcat.processor;
 
+import org.apache.catalina.connector.http.HttpHeader;
 import org.apache.catalina.connector.http.HttpRequestLine;
 import org.apache.catalina.connector.http.SocketInputStream;
 import tomcat.base.HttpRequest;
@@ -7,6 +8,7 @@ import tomcat.base.HttpResponse;
 import tomcat.connector.HttpConnector;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -70,17 +72,55 @@ public class HttpProcessor {
         }
     }
 
-    private void parseHeader(SocketInputStream sis) {
+    private void parseHeader(SocketInputStream sis) throws ServletException {
+        HttpHeader header = new HttpHeader();
+
+        while (true) {
+            try {
+                sis.readHeader(header);
+                if (header.nameEnd != 0) {
+                    String headName = new String(header.name, 0, header.nameEnd);
+                    String headValue = new String(header.value, 0, header.valueEnd);
+
+                    if ("cookies".equals(headName)) {
+                        //TODO process cookies here
+                        parseCookies(headValue);
+
+                    } else if ("content-length".equalsIgnoreCase(headName)) {
+                        //TODO process content-length here
+                        processContentLength(headValue);
+                    } else if ("content-type".equalsIgnoreCase(headName)) {
+                        //TODO process content-type here
+                        request.setContentType(headValue);
+                    }
+
+//                    System.out.println("Name : " + headName + ", Value : " + headValue);
+                    request.addHeader(headName, headValue);
+                } else {
+                    if (header.valueEnd == 0) {
+                        return;
+                    } else {
+                        throw new ServletException("Parsing http request header Exception");
+                    }
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
+
 
     /**
      * parse the Http request line
      * example   requestLine: GET /myApp/ModernServlet?username=nj_yang&password=secret HTTP/1.1
      * example   URI : /myApp/ModernServlet?username=nj_yang&password=secret
+     *
      * @param sis socket's SocketInputStream
      * @param os  socket's OutputStream
-     * @throws IOException ..
+     * @throws IOException      ..
      * @throws ServletException ..
      */
     private void parseRequest(SocketInputStream sis, OutputStream os) throws IOException, ServletException {
@@ -156,9 +196,9 @@ public class HttpProcessor {
             ((HttpRequest) request).setRequestURI(uri);
         }
 
-        if (normalizeUri == null) {
-            throw new ServletException("Invalidate request uri " + uri + "'");
-        }
+//        if (normalizeUri == null) {
+//            throw new ServletException("Invalidate request uri " + uri + "'");
+//        }
 
 
     }
@@ -167,5 +207,22 @@ public class HttpProcessor {
         return null;
     }
 
+    private void parseCookies(String cookiesString) {
+        String[] cookies = cookiesString.split(";");
+        for (int i = 0; i < cookies.length; i++) {
+            String cookieName = cookies[i].substring(0, cookies[i].indexOf("=") - 1);
+            String cookieValue = cookies[i].substring(cookies[i].indexOf("=") + 1, cookies[i].length());
+            request.addCookies(new Cookie(cookieName, cookieValue));
+        }
+    }
 
+    private void processContentLength(String contentlength) throws ServletException {
+        int n = -1;
+        try {
+            n = Integer.parseInt(contentlength);
+        } catch (Exception e) {
+            throw new ServletException("Parsing http head : Content-length Exception");
+        }
+        request.setContentLength(n);
+    }
 }

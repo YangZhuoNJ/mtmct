@@ -22,14 +22,43 @@ public class HttpRequest implements HttpServletRequest {
     private String sessionId = null;
 
 
-    protected HashMap<String, Object> headers = new HashMap<String, Object>();          //http headers
-    protected ArrayList cookies = new ArrayList();                                      //web cookies
+
+    protected HashMap<String, String> headers = new HashMap<String, String>();          //http headers
+    protected ArrayList<Cookie> cookies = new ArrayList();                                      //web cookies
     protected ParameterMap parameters = null;                                           //request parameters
     private String uri = null;
     private String method = null;
     private String protocol = null;
+    private int contentLength = -1;
+    private String contentType = null;
 
+    public void setProtocol(String protocal) {
+        this.protocol = protocal;
+    }
 
+    public void addHeader(String headName, String headValue) {
+        headers.put(headName, headValue);
+    }
+
+    public String getHeader(String s) {
+        return headers.get(s);
+    }
+
+    public void setContentLength(int n) {
+        this.contentLength = n;
+    }
+
+    public int getContentLength() {
+        return contentLength;
+    }
+
+    public void setContentType(String type) {
+        this.contentType = type;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
 
     public void setRequestURI(String normalizeUri) {
         this.uri = normalizeUri;
@@ -43,12 +72,16 @@ public class HttpRequest implements HttpServletRequest {
         this.requestedSessionURL = b;
     }
 
+    public void setRequestedSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
     public void setQueryString(String query) {
         this.queryString = query;
     }
 
-    public void setRequestedSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void addCookies(Cookie cookie) {
+        cookies.add(cookie);
     }
 
     //auto generate method
@@ -57,15 +90,13 @@ public class HttpRequest implements HttpServletRequest {
     }
 
     public Cookie[] getCookies() {
-        return new Cookie[0];
+        return (Cookie[]) cookies.toArray();
     }
+
+
 
     public long getDateHeader(String s) {
         return 0;
-    }
-
-    public String getHeader(String s) {
-        return null;
     }
 
     public Enumeration<String> getHeaders(String s) {
@@ -117,7 +148,7 @@ public class HttpRequest implements HttpServletRequest {
     }
 
     public String getRequestURI() {
-        return null;
+        return uri;
     }
 
     public StringBuffer getRequestURL() {
@@ -184,16 +215,10 @@ public class HttpRequest implements HttpServletRequest {
         return null;
     }
 
+
+
     public void setCharacterEncoding(String s) throws UnsupportedEncodingException {
 
-    }
-
-    public int getContentLength() {
-        return 0;
-    }
-
-    public String getContentType() {
-        return null;
     }
 
     public ServletInputStream getInputStream() throws IOException {
@@ -321,7 +346,6 @@ public class HttpRequest implements HttpServletRequest {
         this.method = method;
     }
 
-    public void setProtocol(String protocal) {
-        this.protocol = protocal;
-    }
+
+
 }
