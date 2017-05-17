@@ -5,5 +5,7 @@ package tomcat.cons;
  */
 public class Constants {
 
+    public final static int PORT = 8080;
+
 
 }
