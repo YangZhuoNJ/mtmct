@@ -146,8 +146,25 @@ public class HttpProcessor {
         }
 
         //todo Normalize URI
+        String normalizeUri = normalize(uri);
+        ((HttpRequest) request).setMethod(method);
+        request.setProtocol(protocal);
+        //set the corresponding request properties
+        if (normalizeUri != null) {
+            ((HttpRequest) request).setRequestURI(normalizeUri);
+        } else {
+            ((HttpRequest) request).setRequestURI(uri);
+        }
+
+        if (normalizeUri == null) {
+            throw new ServletException("Invalidate request uri " + uri + "'");
+        }
 
 
+    }
+
+    private String normalize(String uri) {
+        return null;
     }
 
 

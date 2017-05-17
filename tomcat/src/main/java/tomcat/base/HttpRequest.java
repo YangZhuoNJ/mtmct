@@ -25,7 +25,15 @@ public class HttpRequest implements HttpServletRequest {
     protected HashMap<String, Object> headers = new HashMap<String, Object>();          //http headers
     protected ArrayList cookies = new ArrayList();                                      //web cookies
     protected ParameterMap parameters = null;                                           //request parameters
+    private String uri = null;
+    private String method = null;
+    private String protocol = null;
 
+
+
+    public void setRequestURI(String normalizeUri) {
+        this.uri = normalizeUri;
+    }
 
     public HttpRequest(SocketInputStream sis) {
         this.sis = sis;
@@ -306,5 +314,14 @@ public class HttpRequest implements HttpServletRequest {
 
     public DispatcherType getDispatcherType() {
         return null;
+    }
+
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public void setProtocol(String protocal) {
+        this.protocol = protocal;
     }
 }
