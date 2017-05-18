@@ -6,6 +6,7 @@ import org.apache.catalina.connector.http.SocketInputStream;
 import tomcat.base.HttpRequest;
 import tomcat.base.HttpResponse;
 import tomcat.connector.HttpConnector;
+import tomcat.util.HttpRequestUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -84,7 +85,10 @@ public class HttpProcessor {
 
                     if ("cookies".equals(headName)) {
                         //TODO process cookies here
-                        parseCookies(headValue);
+                        Cookie[] cookies = HttpRequestUtil.parseCookieHeader(headValue);
+                        for (int i = 0; i < cookies.length; i++) {
+                            request.addCookie(cookies[i]);
+                        }
 
                     } else if ("content-length".equalsIgnoreCase(headName)) {
                         //TODO process content-length here

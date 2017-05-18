@@ -80,9 +80,10 @@ public class HttpRequest implements HttpServletRequest {
         this.queryString = query;
     }
 
-    public void addCookies(Cookie cookie) {
+    public void addCookie(Cookie cookie) {
         cookies.add(cookie);
     }
+
 
     //auto generate method
     public String getAuthType() {
