@@ -88,6 +88,16 @@ public class HttpProcessor {
                         Cookie[] cookies = HttpRequestUtil.parseCookieHeader(headValue);
                         for (int i = 0; i < cookies.length; i++) {
                             request.addCookie(cookies[i]);
+                            if ("jsessionid".equalsIgnoreCase(cookies[i].getName())) {
+                                if(!request.isRequestedSessionIdFromCookie()) {
+
+                                    //while request is not requested jsessionid from cookie but cookies contains jsessionid
+                                    //change the flag
+                                    //Accept only the first jsessionid in cookies
+                                    request.setRequestedSessionURL(false);
+                                    request.setRequestedSessionIdFromCookie(true);
+                                }
+                            }
                         }
 
                     } else if ("content-length".equalsIgnoreCase(headName)) {
@@ -211,14 +221,6 @@ public class HttpProcessor {
         return null;
     }
 
-    private void parseCookies(String cookiesString) {
-        String[] cookies = cookiesString.split(";");
-        for (int i = 0; i < cookies.length; i++) {
-            String cookieName = cookies[i].substring(0, cookies[i].indexOf("=") - 1);
-            String cookieValue = cookies[i].substring(cookies[i].indexOf("=") + 1, cookies[i].length());
-            request.addCookies(new Cookie(cookieName, cookieValue));
-        }
-    }
 
     private void processContentLength(String contentlength) throws ServletException {
         int n = -1;

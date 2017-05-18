@@ -2,6 +2,8 @@ package tomcat.base;
 
 import org.apache.catalina.connector.http.SocketInputStream;
 import org.apache.catalina.util.ParameterMap;
+import tomcat.cons.Constants;
+import tomcat.util.HttpRequestUtil;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -18,7 +20,7 @@ public class HttpRequest implements HttpServletRequest {
 
     private SocketInputStream sis = null;
     private String queryString = null;
-    private boolean requestedSessionURL;
+    private boolean requestedSessionURL = false;
     private String sessionId = null;
 
 
@@ -31,6 +33,38 @@ public class HttpRequest implements HttpServletRequest {
     private String protocol = null;
     private int contentLength = -1;
     private String contentType = null;
+    private boolean requestedSessionIdFromCookie = false;
+
+    private ParameterMap parameterMap = null;
+    private boolean parsed = false;                             //identify whether or not parsed the parameterMap
+
+    private void parseParameters() {
+        if (parsed) {
+            return;
+        }
+        ParameterMap results = parameterMap;
+        if (results == null) {
+            results = new ParameterMap();
+        }
+
+        results.setLocked(false);
+
+        String encoding = getCharacterEncoding();
+
+        if (encoding == null) {
+            //use default encoding
+            encoding = Constants.DEFAULT_CHARACTER_ENCODING;
+        }
+        String queryString = getQueryString();
+        try {
+            HttpRequestUtil.parseParameters(results, queryString, encoding);
+        } catch (UnsupportedEncodingException e) {
+            ;
+        }
+
+
+    }
+
 
     public void setProtocol(String protocal) {
         this.protocol = protocal;
@@ -83,6 +117,16 @@ public class HttpRequest implements HttpServletRequest {
     public void addCookie(Cookie cookie) {
         cookies.add(cookie);
     }
+
+    public void setRequestedSessionIdFromCookie(boolean requestedSessionIdFromCookie) {
+        this.requestedSessionIdFromCookie = requestedSessionIdFromCookie;
+    }
+
+    public boolean isRequestedSessionIdFromCookie() {
+        return requestedSessionIdFromCookie;
+    }
+
+
 
 
     //auto generate method
@@ -172,9 +216,6 @@ public class HttpRequest implements HttpServletRequest {
         return false;
     }
 
-    public boolean isRequestedSessionIdFromCookie() {
-        return false;
-    }
 
     public boolean isRequestedSessionIdFromURL() {
         return false;

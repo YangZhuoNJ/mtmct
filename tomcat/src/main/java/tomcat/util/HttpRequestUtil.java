@@ -1,7 +1,10 @@
 package tomcat.util;
 
+import org.apache.catalina.util.ParameterMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
@@ -40,5 +43,10 @@ public class HttpRequestUtil {
         }
 
         return cookies.toArray(new Cookie[cookies.size()]);
+    }
+
+    public static void parseParameters(ParameterMap results, String queryString, String encoding) throws UnsupportedEncodingException{
+        //TODO parse http request parameters
+        
     }
 }
