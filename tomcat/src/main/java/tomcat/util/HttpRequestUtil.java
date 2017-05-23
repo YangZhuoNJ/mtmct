@@ -14,7 +14,7 @@ public class HttpRequestUtil {
 
     /**
      * parse http request cookie header
-     * example : header = "...;xxx=XXX;yyy=YYY;...."
+     * example : header = "...;xxx=XXX;yyy=YYY;...."`
      * @param header http cookie header
      * @return http cookie array
      */
@@ -47,6 +47,6 @@ public class HttpRequestUtil {
 
     public static void parseParameters(ParameterMap results, String queryString, String encoding) throws UnsupportedEncodingException{
         //TODO parse http request parameters
-        
+
     }
 }
