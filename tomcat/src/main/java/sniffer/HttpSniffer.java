@@ -116,9 +116,7 @@ public class HttpSniffer extends JFrame {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 
 

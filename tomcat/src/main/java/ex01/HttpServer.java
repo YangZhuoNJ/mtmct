@@ -41,6 +41,11 @@ public class HttpServer {
                 response.setRequest(request);
 
                 response.sendStaticResource();
+                socket.close();
+
+                if ("/shutdown".equals(request.getUri())) {
+                    shutdown = true;
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
