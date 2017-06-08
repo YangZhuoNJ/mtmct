@@ -13,6 +13,8 @@ import java.net.Socket;
 public class HttpServer {
 
 
+    public static final String SHUTDOWN = "/shutdown";
+
     public static void main(String[] args) {
         HttpServer server = new HttpServer();
         server.await();
@@ -43,7 +45,7 @@ public class HttpServer {
                 response.sendStaticResource();
                 socket.close();
 
-                if ("/shutdown".equals(request.getUri())) {
+                if (SHUTDOWN.equals(request.getUri())) {
                     shutdown = true;
                 }
 
