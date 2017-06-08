@@ -61,6 +61,9 @@ public class HttpSniffer extends JFrame {
             }
         });
         this.getContentPane().add(send, null);
+
+        response.setBounds(new Rectangle(10, 80, 320, 480));
+        this.getContentPane().add(response, null);
     }
 
     private void send_action_performed() {

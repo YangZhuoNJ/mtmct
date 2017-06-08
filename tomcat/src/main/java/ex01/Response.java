@@ -26,11 +26,13 @@ public class Response {
 
         File file = new File(Cons.WEB_ROOT, request.getUri());
         byte[] buffer = new byte[Cons.BUFFER_SIZE];
+        System.out.print(file.getPath());
 
         InputStream fis = null;
         if (file.isFile() && file.exists()) {
             try {
                 fis = new FileInputStream(file);
+                System.out.print(file.getPath());
                 int ch = -1;
                 ch = fis.read(buffer, 0, Cons.BUFFER_SIZE);
                 while (ch != -1) {
@@ -42,6 +44,14 @@ public class Response {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 

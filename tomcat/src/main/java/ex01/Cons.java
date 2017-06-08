@@ -12,5 +12,5 @@ public class Cons {
 
     public static final int BUFFER_SIZE = 2048;
 
-    public static final String WEB_ROOT = "/webroot";
+    public static final String WEB_ROOT = "F:/WK/tomcat/tomcat/webroot";
 }

@@ -39,9 +39,10 @@ public class HttpServer {
                 Request request = new Request(input, output);
                 request.parse();
 
+                System.out.print(request.getUri());
+
                 Response response = new Response(input, output);
                 response.setRequest(request);
-
                 response.sendStaticResource();
                 socket.close();
 
