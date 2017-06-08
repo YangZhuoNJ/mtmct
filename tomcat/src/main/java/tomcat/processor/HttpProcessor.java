@@ -41,7 +41,7 @@ public class HttpProcessor {
             //create Request Object
             request = new HttpRequest(sis);
 
-            //create Response Object
+            //create Request Object
             response = new HttpResponse(os);
             response.setRequest(request);
 

@@ -6,5 +6,5 @@ package learnfield.rpc;
 public class Constants {
 
     public static final int PORT = 6666;
-    public static final String HOST = "127.0.0.1";
+    public static final String HOST = "192.168.1.158";
 }

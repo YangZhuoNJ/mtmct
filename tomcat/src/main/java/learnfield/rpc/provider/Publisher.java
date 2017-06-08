@@ -36,6 +36,8 @@ public class Publisher {
 
         while (publish) {
             final Socket socket = serverSocket.accept();
+
+            System.out.print(socket.getInetAddress());
             new Thread(new Runnable() {
                 public void run() {
 
