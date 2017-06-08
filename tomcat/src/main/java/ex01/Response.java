@@ -29,8 +29,9 @@ public class Response {
         System.out.print(file.getPath());
 
         InputStream fis = null;
-        if (file.isFile() && file.exists()) {
-            try {
+
+        try {
+            if (file.isFile() && file.exists()) {
                 fis = new FileInputStream(file);
                 System.out.print(file.getPath());
                 int ch = -1;
@@ -40,20 +41,27 @@ public class Response {
                     ch = fis.read(buffer, 0, Cons.BUFFER_SIZE);
                 }
                 output.flush();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (fis != null) {
-                    try {
-                        fis.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            } else {
+                // file not found
+                String errorMessage = "HTTP/1.1 404 File Not Found\r\n" +
+                        "Content-Type: text/html\r\n" +
+                        "Content-Length: 23\r\n" +
+                        "\r\n" +
+                        "<h1>File Not Found</h1>";
+                output.write(errorMessage.getBytes());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
-
     }
 }
