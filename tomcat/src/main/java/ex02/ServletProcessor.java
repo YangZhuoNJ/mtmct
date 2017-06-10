@@ -1,8 +1,6 @@
 package ex02;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +48,11 @@ public class ServletProcessor extends Processor {
 
         try {
             servlet = (Servlet) servletKlass.newInstance();
-            servlet.service((ServletRequest) request, (ServletResponse) response);
+            RequestFacade requestFacade = new RequestFacade(request);
+            ResponseFacade responseFacade = new ResponseFacade(response);
+
+//            servlet.service((ServletRequest) request, (ServletResponse) response);
+            servlet.service(requestFacade, responseFacade);
         } catch (Exception e) {
             e.printStackTrace();
         } catch (Throwable throwable) {
