@@ -19,7 +19,7 @@ public class ServletProcessor extends Processor {
     public void process() {
 
         String uri = request.getUri();
-        String servletName = uri.substring(uri.indexOf("/") + 1);
+        String servletName = uri.substring(uri.lastIndexOf("/") + 1);
 
         // create Servlet loader
         URLClassLoader loader = null;
