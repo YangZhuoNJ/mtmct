@@ -11,13 +11,11 @@ import java.util.Map;
  */
 public class Request implements ServletRequest{
     private final InputStream input;
-    private final OutputStream output;
     private String uri = null;
 
 
-    public Request(InputStream input, OutputStream output) {
+    public Request(InputStream input) {
         this.input = input;
-        this.output = output;
     }
 
     public void parse() {
