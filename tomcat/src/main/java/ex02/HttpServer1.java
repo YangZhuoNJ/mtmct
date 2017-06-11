@@ -49,7 +49,7 @@ public class HttpServer1 {
 
                 String uri = request.getUri();
                 Processor processor = null;
-                if (uri != null && Cons.SERVLET_HEAD.equals(uri)) {
+                if (uri != null && uri.endsWith(Cons.SERVLET_HEAD)) {
                     processor = new ServletProcessor(request, response);
                 } else {
                     processor = new StaticResourceProcessor(request, response);

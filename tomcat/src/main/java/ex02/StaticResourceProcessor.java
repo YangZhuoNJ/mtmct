@@ -1,8 +1,5 @@
 package ex02;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -15,6 +12,10 @@ public class StaticResourceProcessor extends Processor {
     }
 
     public void process() {
-        response.process();
+        try {
+            response.process();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
