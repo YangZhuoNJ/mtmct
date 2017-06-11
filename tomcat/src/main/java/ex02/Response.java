@@ -64,7 +64,7 @@ public class Response implements ServletResponse{
     }
 
     public PrintWriter getWriter() throws IOException {
-        return new PrintWriter(output);
+        return new PrintWriter(output, true);
     }
 
     public void setCharacterEncoding(String s) {
