@@ -40,7 +40,7 @@ public class HttpServer1 {
                 input = socket.getInputStream();
                 output = socket.getOutputStream();
 
-                Request request = new Request(input, output);
+                Request request = new Request(input);
                 request.parse();
 
                 Response response = new Response(output);
