@@ -39,4 +39,43 @@ public class HttpRequestLine {
         uriEnd = 0;
         protocolEnd = 0;
     }
+
+
+    public int indexOf(String str) {
+        return indexOf(str.toCharArray(), str.length());
+    }
+
+    private int indexOf(char[] buf, int end) {
+        int pos = 0;
+        char f = buf[0];
+        while (pos < uriEnd) {
+            pos = indexOf(f, pos);
+            if (pos < 0) {
+                return -1;
+            } else if (pos > uriEnd - end) {
+                return -1;
+            } else {
+                for (int i = 1; i < end; i++) {
+                    if (uri[pos + i] != buf[i]) {
+                        break;
+                    }
+                    if (i == (end - 1)) {
+                        return pos;
+                    }
+                }
+            }
+            pos++;
+        }
+        return -1;
+    }
+
+    private int indexOf(char c, int start) {
+        for (int i = start; i < uriEnd; i++) {
+            if (uri[i] == c) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }

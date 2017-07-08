@@ -7,8 +7,13 @@ public class HttpRequest {
 
 
     private final SocketInputStream input;
+    private String queryString;
 
     public HttpRequest(SocketInputStream input) {
         this.input = input;
+    }
+
+    public void setQueryString(String queryString) {
+        this.queryString = queryString;
     }
 }
