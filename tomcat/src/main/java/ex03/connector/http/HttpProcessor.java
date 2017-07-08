@@ -80,7 +80,7 @@ public class HttpProcessor {
                 pos = uri.indexOf("/");
                 if (pos == -1) {
                     uri = "";
-                }else {
+                } else {
                     uri = uri.substring(pos);
                 }
             }
@@ -102,9 +102,94 @@ public class HttpProcessor {
             }
             request.setRequestedSessionURL(true);
             uri = uri.substring(0, semicolon) + rest;
-        }else {
+        } else {
             request.setRequestedSessionId(null);
             request.setRequestedSessionURL(false);
         }
+
+        //TODO　normalize
+        String normalizeUri = normalize(uri);
+
+        request.setMethod(method);
+        request.setProtocol(portocol);
+        request.setUri(normalizeUri == null ? uri : normalizeUri);
+
+        if (normalizeUri == null) {
+            throw new ServletException("Invalid URI: " + uri );
+        }
+    }
+
+    private String normalize(String path) {
+        if (path == null) {
+            return null;
+        }
+
+        String normalized = path;
+
+        //normalize the "/%7E" and "/%7e" at the beginning to "/~"
+        if (normalized.startsWith("/%7E") || normalized.startsWith("/%7e")) {
+            normalized = "/~" + normalized.substring(4);
+        }
+
+        // Prevent encoding '%', '/', '.' and '\', which are special reserved
+        // characters
+        if ((normalized.indexOf("%25") >= 0)
+                || (normalized.indexOf("%2F") >= 0)
+                || (normalized.indexOf("%2E") >= 0)
+                || (normalized.indexOf("%5C") >= 0)
+                || (normalized.indexOf("%2f") >= 0)
+                || (normalized.indexOf("%2e") >= 0)
+                || (normalized.indexOf("%5c") >= 0)) {
+            return null;
+        }
+
+        if (normalized.equals("/."))
+            return "/";
+
+        // Normalize the slashes and add leading slash if necessary
+        if (normalized.indexOf('\\') >= 0)
+            normalized = normalized.replace('\\', '/');
+        if (!normalized.startsWith("/"))
+            normalized = "/" + normalized;
+
+        // Resolve occurrences of "//" in the normalized path
+        while (true) {
+            int index = normalized.indexOf("//");
+            if (index < 0)
+                break;
+            normalized = normalized.substring(0, index) +
+                    normalized.substring(index + 1);
+        }
+
+        // Resolve occurrences of "/./" in the normalized path
+        while (true) {
+            int index = normalized.indexOf("/./");
+            if (index < 0)
+                break;
+            normalized = normalized.substring(0, index) +
+                    normalized.substring(index + 2);
+        }
+
+        // Resolve occurrences of "/../" in the normalized path
+        while (true) {
+            int index = normalized.indexOf("/../");
+            if (index < 0)
+                break;
+            if (index == 0)
+                return (null);  // Trying to go outside our context
+            int index2 = normalized.lastIndexOf('/', index - 1);
+            normalized = normalized.substring(0, index2) +
+                    normalized.substring(index + 3);
+        }
+
+        // Declare occurrences of "/..." (three or more dots) to be invalid
+        // (on some Windows platforms this walks the directory tree!!!)
+        if (normalized.indexOf("/...") >= 0)
+            return (null);
+
+        // Return the normalized path that we have completed
+        return (normalized);
+
+
     }
 }
